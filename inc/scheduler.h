@@ -1,13 +1,12 @@
 #include <utility>
 #include <vector>
 
+#include "nodes.h"
+
 namespace Batcher {
 
-typedef int node_t;
 typedef std::pair<node_t, node_t> pair_t;
 typedef std::vector<pair_t> queue_t;
-typedef std::vector<node_t> nodes_t;
-typedef nodes_t::const_iterator nodes_const_it;
 
 class Scheduler
 {
