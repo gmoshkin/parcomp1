@@ -4,23 +4,33 @@
 
 using namespace Batcher;
 
+void printNodes(const nodes_t &nodes)
+{
+    cout << "[ ";
+    for (nodes_const_it it = nodes.begin(); it != nodes.end(); it++) {
+        cout << *it << " ";
+    }
+    cout << "]";
+}
+
 void Scheduler::bisect(const nodes_t &nodes)
 {
     cout << "bisecting ";
     printNodes(nodes);
 
     if (nodes.size() < 2) {
-        cout << "nothing to bisect" << endl;
+        cout << " nothing to bisect" << endl;
         return;
     }
 
     nodes_t topNodes(nodes.begin(), nodes.begin() + nodes.size() / 2);
     nodes_t botNodes(nodes.begin() + nodes.size() / 2, nodes.end());
 
-    cout << "top: ";
+    cout << " → ";
     printNodes(topNodes);
-    cout << "bottom: ";
+    cout << " ";
     printNodes(botNodes);
+    cout << endl;
 
     this->bisect(topNodes);
     this->bisect(botNodes);
@@ -30,13 +40,19 @@ void Scheduler::bisect(const nodes_t &nodes)
 
 void Scheduler::shuffle(const nodes_t &topNodes, const nodes_t &botNodes)
 {
-    cout << "shuffling" << endl;
+    cout << "shuffling ";
+    printNodes(topNodes);
+    cout << " ";
+    printNodes(botNodes);
+    cout << endl;
+
     unsigned int totalCount = topNodes.size() + botNodes.size();
     if (totalCount < 2) {
-        cout << "nothin to shuffle" << endl;
+        cout << " nothin to shuffle" << endl;
         return;
     } else if (totalCount == 2) {
         this->addPair(topNodes[0], botNodes[0]);
+        return;
     }
     cout << "TODO" << endl;
 }
