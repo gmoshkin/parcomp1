@@ -7,13 +7,13 @@ using std::endl;
 
 namespace Batcher {
 
-void printNodes(const nodes_t &nodes)
+void operator <<(std::ostream &out, const nodes_t &nodes)
 {
-    cout << "[ ";
+    out << "[ ";
     for (nodes_it it = nodes.begin(); it != nodes.end(); it++) {
-        cout << *it << " ";
+        out << *it << " ";
     }
-    cout << "]";
+    out << "]";
 }
 
 void split(const nodes_t &nodes, nodes_t &oddNodes, nodes_t &evenNodes)

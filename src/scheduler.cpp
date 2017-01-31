@@ -1,6 +1,7 @@
 #include <iostream>
 #include <utility>
 
+#include "utils.h"
 #include "scheduler.h"
 #include "nodes.h"
 
@@ -10,22 +11,22 @@ using namespace Batcher;
 
 void Scheduler::toSort(const nodes_t &nodes)
 {
-    cout << "to sort ";
-    printNodes(nodes);
+    DEBUG("to sort ");
+    DEBUG(nodes);
 
     if (nodes.size() < 2) {
-        cout << " nothing to sort" << endl;
+        DEBUG(" nothing to sort" << endl);
         return;
     }
 
     nodes_t topNodes(nodes.begin(), nodes.begin() + nodes.size() / 2);
     nodes_t botNodes(nodes.begin() + nodes.size() / 2, nodes.end());
 
-    cout << " → ";
-    printNodes(topNodes);
-    cout << " ";
-    printNodes(botNodes);
-    cout << endl;
+    DEBUG(" → ");
+    DEBUG(topNodes);
+    DEBUG(" ");
+    DEBUG(botNodes);
+    DEBUG(endl);
 
     this->toSort(topNodes);
     this->toSort(botNodes);
@@ -51,14 +52,14 @@ void Scheduler::addPairs(const nodes_t &topNodes, const nodes_t &botNodes)
 
 void Scheduler::toMerge(const nodes_t &topNodes, const nodes_t &botNodes)
 {
-    cout << "to merge ";
-    printNodes(topNodes);
-    cout << " ";
-    printNodes(botNodes);
-    cout << endl;
+    DEBUG("to merge ");
+    DEBUG(topNodes);
+    DEBUG(" ");
+    DEBUG(botNodes);
+    DEBUG(endl);
 
     if (topNodes.size() == 0 || botNodes.size() == 0) {
-        cout << " nothin to merge" << endl;
+        DEBUG(" nothin to merge" << endl);
         return;
     } else if (topNodes.size() == 1 && botNodes.size() == 1) {
         this->addPair(topNodes[0], botNodes[0]);
@@ -69,22 +70,23 @@ void Scheduler::toMerge(const nodes_t &topNodes, const nodes_t &botNodes)
     split(topNodes, topOddNodes, topEvenNodes);
     split(botNodes, botOddNodes, botEvenNodes);
 
-    cout << "odd ";
+    DEBUG("odd ");
     this->toMerge(topOddNodes, botOddNodes);
-    cout << "even ";
+    DEBUG("even ");
     this->toMerge(topEvenNodes, botEvenNodes);
 
-    cout << "joining ";
-    printNodes(topNodes);
-    cout << " + ";
-    printNodes(botNodes);
-    cout << endl;
+    DEBUG("joining ");
+    DEBUG(topNodes);
+    DEBUG(" + ");
+    DEBUG(botNodes);
+    DEBUG(endl);
+
     this->addPairs(topNodes, botNodes);
 }
 
 void Scheduler::addPair(const node_t node1, const node_t node2)
 {
-    cout << "adding (" << node1 << "," << node2 << ")" << endl;
+    DEBUG("adding (" << node1 << "," << node2 << ")" << endl);
     this->queue.push_back(std::make_pair(node1, node2));
 }
 
