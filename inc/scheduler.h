@@ -1,3 +1,6 @@
+#ifndef __SCHEDULER_H__
+#define __SCHEDULER_H__
+
 #include <utility>
 #include <vector>
 
@@ -42,3 +45,5 @@ public:
 };
 
 }
+
+#endif /* end of include guard: __SCHEDULER_H__ */

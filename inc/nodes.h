@@ -1,3 +1,6 @@
+#ifndef __NODES_H__
+#define __NODES_H__
+
 #include <vector>
 
 namespace Batcher {
@@ -13,3 +16,5 @@ void split(const nodes_t &nodes, nodes_t &oddNodes, nodes_t &evenNodes);
 void insertRange(nodes_t &nodes, int start, int end);
 
 }
+
+#endif /* end of include guard: __NODES_H__ */
