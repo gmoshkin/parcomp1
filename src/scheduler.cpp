@@ -57,11 +57,10 @@ void Scheduler::toMerge(const nodes_t &topNodes, const nodes_t &botNodes)
     printNodes(botNodes);
     cout << endl;
 
-    unsigned int totalCount = topNodes.size() + botNodes.size();
-    if (totalCount < 2) {
+    if (topNodes.size() == 0 || botNodes.size() == 0) {
         cout << " nothin to merge" << endl;
         return;
-    } else if (totalCount == 2) {
+    } else if (topNodes.size() == 1 && botNodes.size() == 1) {
         this->addPair(topNodes[0], botNodes[0]);
         return;
     }
