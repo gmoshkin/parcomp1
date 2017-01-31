@@ -1,7 +1,10 @@
+#include <iostream>
 #include <utility>
 
 #include "batcher.h"
 
+using std::cout;
+using std::endl;
 using namespace Batcher;
 
 void printNodes(const nodes_t &nodes)
@@ -36,7 +39,6 @@ void Scheduler::toSort(const nodes_t &nodes)
     this->toSort(botNodes);
 
     this->toMerge(topNodes, botNodes);
-
 }
 
 void split(const nodes_t &nodes, nodes_t &oddNodes, nodes_t &evenNodes)
