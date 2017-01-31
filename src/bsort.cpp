@@ -19,6 +19,8 @@ int bsort(int n1, int n2)
     sched.printSchedule();
     cout << sched.getComparisonsCount() << endl;
     cout << sched.getTactsCount() << endl;
-    sched.prettyPrintSchedule();
+    if (n1 + n2 <= 11) {
+        sched.prettyPrintSchedule();
+    }
     return 0;
 }
