@@ -98,6 +98,8 @@ void Scheduler::getSchedule(long n1)
     nodes_t nodes;
     insertRange(nodes, 0, n1);
     this->toSort(nodes);
+
+    this->curPair = queue.begin();
 }
 
 void Scheduler::getSchedule(long n1, long n2)
@@ -109,6 +111,8 @@ void Scheduler::getSchedule(long n1, long n2)
     insertRange(topNodes, 0, n1);
     insertRange(botNodes, n1, n1 + n2);
     this->toMerge(topNodes, botNodes);
+
+    this->curPair = queue.begin();
 }
 
 void Scheduler::printSchedule()
@@ -150,4 +154,15 @@ void Scheduler::printComparison(const pair_t &pair)
             cout << "  ";
         }
     }
+}
+
+bool Scheduler::getPair(node_t &i1, node_t &i2)
+{
+    if (this->curPair != this->queue.end()) {
+        i1 = this->curPair->first;
+        i2 = this->curPair->second;
+        this->curPair++;
+        return true;
+    }
+    return false;
 }

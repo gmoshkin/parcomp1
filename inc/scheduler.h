@@ -8,7 +8,6 @@
 
 namespace Batcher {
 
-
 class Scheduler
 {
 private:
@@ -19,6 +18,7 @@ private:
     queue_t queue;
     int topNodesCount;
     int botNodesCount;
+    queue_it curPair;
 
     void toSort(const nodes_t &nodes);
     void toMerge(const nodes_t &topNodes, const nodes_t &botNodes);
@@ -29,6 +29,7 @@ private:
 public:
     void getSchedule(long len1);
     void getSchedule(long len1, long len2);
+    bool getPair(node_t &i1, node_t &i2);
     void printSchedule();
     void prettyPrintSchedule();
 
