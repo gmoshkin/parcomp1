@@ -38,6 +38,35 @@ void Scheduler::bisect(const nodes_t &nodes)
     this->shuffle(topNodes, botNodes);
 }
 
+void split(const nodes_t &nodes, nodes_t &oddNodes, nodes_t &evenNodes)
+{
+    bool odd = true;
+    for (nodes_const_it it = nodes.begin(); it != nodes.end(); it++) {
+        if (odd) {
+            oddNodes.push_back(*it);
+        } else {
+            evenNodes.push_back(*it);
+        }
+        odd = !odd;
+    }
+}
+
+void Scheduler::addPairs(const nodes_t &topNodes, const nodes_t &botNodes)
+{
+    nodes_const_it it = topNodes.begin() + 1;
+    for (; it != topNodes.end() && it + 1 != topNodes.end(); it += 2) {
+        this->addPair(*it, *(it + 1));
+    }
+    it = botNodes.begin();
+    if (topNodes.size() % 2 == 0) {
+        this->addPair(topNodes.back(), *it);
+        it++;
+    }
+    for (; it != botNodes.end() && it + 1 != botNodes.end(); it += 2) {
+        this->addPair(*it, *(it + 1));
+    }
+}
+
 void Scheduler::shuffle(const nodes_t &topNodes, const nodes_t &botNodes)
 {
     cout << "shuffling ";
@@ -54,7 +83,22 @@ void Scheduler::shuffle(const nodes_t &topNodes, const nodes_t &botNodes)
         this->addPair(topNodes[0], botNodes[0]);
         return;
     }
-    cout << "TODO" << endl;
+    nodes_t topOddNodes, topEvenNodes, botOddNodes, botEvenNodes;
+
+    split(topNodes, topOddNodes, topEvenNodes);
+    split(botNodes, botOddNodes, botEvenNodes);
+
+    cout << "odd ";
+    this->shuffle(topOddNodes, botOddNodes);
+    cout << "even ";
+    this->shuffle(topEvenNodes, botEvenNodes);
+
+    cout << "joining ";
+    printNodes(topNodes);
+    cout << " + ";
+    printNodes(botNodes);
+    cout << endl;
+    this->addPairs(topNodes, botNodes);
 }
 
 void Scheduler::addPair(const node_t node1, const node_t node2)

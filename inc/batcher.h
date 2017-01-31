@@ -21,6 +21,7 @@ public:
     void bisect(const nodes_t &nodes);
     void shuffle(const nodes_t &topNodes, const nodes_t &botNodes);
     void addPair(const node_t node1, const node_t node2);
+    void addPairs(const nodes_t &topNode, const nodes_t &botNode);
 };
 
 }
