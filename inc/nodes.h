@@ -4,7 +4,7 @@ namespace Batcher {
 
 typedef int node_t;
 typedef std::vector<node_t> nodes_t;
-typedef nodes_t::const_iterator nodes_const_it;
+typedef nodes_t::const_iterator nodes_it;
 
 void printNodes(const nodes_t &nodes);
 

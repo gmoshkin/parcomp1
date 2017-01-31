@@ -5,22 +5,40 @@
 
 namespace Batcher {
 
-typedef std::pair<node_t, node_t> pair_t;
-typedef std::vector<pair_t> queue_t;
 
 class Scheduler
 {
 private:
+    typedef std::pair<node_t, node_t> pair_t;
+    typedef std::vector<pair_t> queue_t;
+    typedef queue_t::const_iterator queue_it;
+
     queue_t queue;
+    int topNodesCount;
+    int botNodesCount;
+
+    void toSort(const nodes_t &nodes);
+    void toMerge(const nodes_t &topNodes, const nodes_t &botNodes);
+    void addPair(const node_t node1, const node_t node2);
+    void addPairs(const nodes_t &topNode, const nodes_t &botNode);
+    void printComparison(const pair_t &pair);
 
 public:
     void getSchedule(long len1);
     void getSchedule(long len1, long len2);
     void printSchedule();
-    void toSort(const nodes_t &nodes);
-    void toMerge(const nodes_t &topNodes, const nodes_t &botNodes);
-    void addPair(const node_t node1, const node_t node2);
-    void addPairs(const nodes_t &topNode, const nodes_t &botNode);
+    void prettyPrintSchedule();
+
+    int getComparisonsCount()
+    {
+        return this->queue.size();
+    }
+
+    int getTactsCount()
+    {
+        int cmpCount = this->getComparisonsCount();
+        return cmpCount / 2 + cmpCount % 2;
+    }
 };
 
 }

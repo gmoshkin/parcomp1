@@ -7,6 +7,8 @@ using std::endl;
 
 int bsort(int n1, int n2)
 {
+    cout << n1 << " " << n2 << " 0" << endl;
+
     Batcher::Scheduler sched;
 
     if (n2 == 0) {
@@ -15,5 +17,8 @@ int bsort(int n1, int n2)
         sched.getSchedule(n1, n2);
     }
     sched.printSchedule();
+    cout << sched.getComparisonsCount() << endl;
+    cout << sched.getTactsCount() << endl;
+    sched.prettyPrintSchedule();
     return 0;
 }

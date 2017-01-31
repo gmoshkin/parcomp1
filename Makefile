@@ -27,14 +27,14 @@ run: $(EXEC)
 $(EXEC): $(patsubst $(SRCDIR)/%.cpp, $(BINDIR)/%.o, $(wildcard $(SRCDIR)/*))
 	$(CXX) $(CXXFLAGS) -o $@ $(filter %.o, $^)
 
-$(BINDIR)/%.o: $(SRCDIR)/%.cpp
+$(BINDIR)/%.o: $(SRCDIR)/%.cpp $(DEPEND)
 	# $*
 	mkdir -p $(BINDIR)
 	$(CXX) $(CXXFLAGS) -c -o $(call SRC2OBJ, $<) $<
 
 depend: $(DEPEND)
 
-$(DEPEND): $(SRCDIR)/*
+$(DEPEND): $(SRCDIR)/* $(INCDIR)/*
 	rm -f $(DEPEND)
 	$(CXX) $(CXXFLAGS) -MM $^ -MF  $(DEPEND)
 

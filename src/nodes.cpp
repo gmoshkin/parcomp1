@@ -10,7 +10,7 @@ namespace Batcher {
 void printNodes(const nodes_t &nodes)
 {
     cout << "[ ";
-    for (nodes_const_it it = nodes.begin(); it != nodes.end(); it++) {
+    for (nodes_it it = nodes.begin(); it != nodes.end(); it++) {
         cout << *it << " ";
     }
     cout << "]";
@@ -19,7 +19,7 @@ void printNodes(const nodes_t &nodes)
 void split(const nodes_t &nodes, nodes_t &oddNodes, nodes_t &evenNodes)
 {
     bool odd = true;
-    for (nodes_const_it it = nodes.begin(); it != nodes.end(); it++) {
+    for (nodes_it it = nodes.begin(); it != nodes.end(); it++) {
         if (odd) {
             oddNodes.push_back(*it);
         } else {
