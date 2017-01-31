@@ -13,13 +13,13 @@ void printNodes(const nodes_t &nodes)
     cout << "]";
 }
 
-void Scheduler::bisect(const nodes_t &nodes)
+void Scheduler::toSort(const nodes_t &nodes)
 {
-    cout << "bisecting ";
+    cout << "to sort ";
     printNodes(nodes);
 
     if (nodes.size() < 2) {
-        cout << " nothing to bisect" << endl;
+        cout << " nothing to sort" << endl;
         return;
     }
 
@@ -32,10 +32,11 @@ void Scheduler::bisect(const nodes_t &nodes)
     printNodes(botNodes);
     cout << endl;
 
-    this->bisect(topNodes);
-    this->bisect(botNodes);
+    this->toSort(topNodes);
+    this->toSort(botNodes);
 
-    this->shuffle(topNodes, botNodes);
+    this->toMerge(topNodes, botNodes);
+
 }
 
 void split(const nodes_t &nodes, nodes_t &oddNodes, nodes_t &evenNodes)
@@ -67,9 +68,9 @@ void Scheduler::addPairs(const nodes_t &topNodes, const nodes_t &botNodes)
     }
 }
 
-void Scheduler::shuffle(const nodes_t &topNodes, const nodes_t &botNodes)
+void Scheduler::toMerge(const nodes_t &topNodes, const nodes_t &botNodes)
 {
-    cout << "shuffling ";
+    cout << "to merge ";
     printNodes(topNodes);
     cout << " ";
     printNodes(botNodes);
@@ -77,7 +78,7 @@ void Scheduler::shuffle(const nodes_t &topNodes, const nodes_t &botNodes)
 
     unsigned int totalCount = topNodes.size() + botNodes.size();
     if (totalCount < 2) {
-        cout << " nothin to shuffle" << endl;
+        cout << " nothin to merge" << endl;
         return;
     } else if (totalCount == 2) {
         this->addPair(topNodes[0], botNodes[0]);
@@ -89,9 +90,9 @@ void Scheduler::shuffle(const nodes_t &topNodes, const nodes_t &botNodes)
     split(botNodes, botOddNodes, botEvenNodes);
 
     cout << "odd ";
-    this->shuffle(topOddNodes, botOddNodes);
+    this->toMerge(topOddNodes, botOddNodes);
     cout << "even ";
-    this->shuffle(topEvenNodes, botEvenNodes);
+    this->toMerge(topEvenNodes, botEvenNodes);
 
     cout << "joining ";
     printNodes(topNodes);
