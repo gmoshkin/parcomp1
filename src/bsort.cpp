@@ -125,13 +125,30 @@ void insertRange(nodes_t &nodes, int start, int end)
     }
 }
 
-int bsort(int n1, int n2)
+void Scheduler::getSchedule(long n1)
 {
     nodes_t nodes;
+    insertRange(nodes, 0, n1);
+    this->toSort(nodes);
+}
+
+void Scheduler::getSchedule(long n1, long n2)
+{
+    nodes_t topNodes, botNodes;
+    insertRange(topNodes, 0, n1);
+    insertRange(botNodes, n1, n1 + n2);
+    this->toMerge(topNodes, botNodes);
+}
+
+int bsort(int n1, int n2)
+{
     Scheduler sched;
 
-    insertRange(nodes, 0, n1);
-    sched.bisect(nodes);
+    if (n2 == 0) {
+        sched.getSchedule(n1);
+    } else {
+        sched.getSchedule(n1, n2);
+    }
     sched.printSchedule();
     return 0;
 }

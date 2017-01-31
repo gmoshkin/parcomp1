@@ -15,8 +15,8 @@ private:
     queue_t queue;
 
 public:
-    void makeSchedule(long len1);
-    void makeSchedule(long len1, long len2);
+    void getSchedule(long len1);
+    void getSchedule(long len1, long len2);
     void printSchedule();
     void toSort(const nodes_t &nodes);
     void toMerge(const nodes_t &topNodes, const nodes_t &botNodes);
