@@ -13,5 +13,6 @@ int main(int argc, char *argv[])
         return -1;
     }
     cout << n1 << ", " << n2 << endl;
+    bsort(n1, n2);
     return 0;
 }
