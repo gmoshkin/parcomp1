@@ -17,4 +17,10 @@ std::ostream &operator <<(std::ostream &out, const numbers_t &);
 int parseOptions(int argc, char *argv[], int &n1, int &n2);
 int parseLists(int argc, char *argv[], numbers_t &n1, numbers_t &n2);
 
+template <typename T1>
+inline const T1 &max(const T1 &v1, const T1 &v2)
+{
+    return v1 > v2 ? v1 : v2;
+}
+
 #endif /* end of include guard: __UTILS_H__ */

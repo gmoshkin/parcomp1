@@ -9,14 +9,14 @@ using std::cout;
 using std::endl;
 using namespace Batcher;
 
-void Scheduler::toSort(const nodes_t &nodes)
+int Scheduler::toSort(const nodes_t &nodes)
 {
     DEBUG("to sort ");
     DEBUG(nodes);
 
     if (nodes.size() < 2) {
         DEBUG(" nothing to sort" << endl);
-        return;
+        return 0;
     }
 
     nodes_t topNodes(nodes.begin(), nodes.begin() + nodes.size() / 2);
@@ -28,10 +28,15 @@ void Scheduler::toSort(const nodes_t &nodes)
     DEBUG(botNodes);
     DEBUG(endl);
 
-    this->toSort(topNodes);
-    this->toSort(botNodes);
+    int pairCountTop = this->toSort(topNodes);
+    int pairCountBottom = this->toSort(botNodes);
 
-    this->toMerge(topNodes, botNodes);
+    int res = max(pairCountTop, pairCountBottom);
+
+    res += this->toMerge(topNodes, botNodes);
+
+    DEBUG("sorted in " << res << " tacts" << endl);
+    return res;
 }
 
 void Scheduler::addPairs(const nodes_t &topNodes, const nodes_t &botNodes)
@@ -50,7 +55,7 @@ void Scheduler::addPairs(const nodes_t &topNodes, const nodes_t &botNodes)
     }
 }
 
-void Scheduler::toMerge(const nodes_t &topNodes, const nodes_t &botNodes)
+int Scheduler::toMerge(const nodes_t &topNodes, const nodes_t &botNodes)
 {
     DEBUG("to merge ");
     DEBUG(topNodes);
@@ -60,10 +65,10 @@ void Scheduler::toMerge(const nodes_t &topNodes, const nodes_t &botNodes)
 
     if (topNodes.size() == 0 || botNodes.size() == 0) {
         DEBUG(" nothin to merge" << endl);
-        return;
+        return 0;
     } else if (topNodes.size() == 1 && botNodes.size() == 1) {
         this->addPair(topNodes[0], botNodes[0]);
-        return;
+        return 1;
     }
     nodes_t topOddNodes, topEvenNodes, botOddNodes, botEvenNodes;
 
@@ -71,9 +76,11 @@ void Scheduler::toMerge(const nodes_t &topNodes, const nodes_t &botNodes)
     split(botNodes, botOddNodes, botEvenNodes);
 
     DEBUG("odd ");
-    this->toMerge(topOddNodes, botOddNodes);
+    int pairCountOdd = this->toMerge(topOddNodes, botOddNodes);
     DEBUG("even ");
-    this->toMerge(topEvenNodes, botEvenNodes);
+    int pairCountEven = this->toMerge(topEvenNodes, botEvenNodes);
+
+    int res = max(pairCountOdd, pairCountEven);
 
     DEBUG("joining ");
     DEBUG(topNodes);
@@ -82,6 +89,10 @@ void Scheduler::toMerge(const nodes_t &topNodes, const nodes_t &botNodes)
     DEBUG(endl);
 
     this->addPairs(topNodes, botNodes);
+    res++;
+
+    DEBUG("merged in " << res << " tacts" << endl);
+    return res;
 }
 
 void Scheduler::addPair(const node_t node1, const node_t node2)
@@ -90,27 +101,21 @@ void Scheduler::addPair(const node_t node1, const node_t node2)
     this->queue.push_back(std::make_pair(node1, node2));
 }
 
-void Scheduler::getSchedule(long n1)
-{
-    this->topNodesCount = n1;
-    this->botNodesCount = 0;
-
-    nodes_t nodes;
-    insertRange(nodes, 0, n1);
-    this->toSort(nodes);
-
-    this->curPair = queue.begin();
-}
-
 void Scheduler::getSchedule(long n1, long n2)
 {
     this->topNodesCount = n1;
     this->botNodesCount = n2;
 
-    nodes_t topNodes, botNodes;
-    insertRange(topNodes, 0, n1);
-    insertRange(botNodes, n1, n1 + n2);
-    this->toMerge(topNodes, botNodes);
+    if (n2 == 0) {
+        nodes_t nodes;
+        insertRange(nodes, 0, n1);
+        this->tactsCount = this->toSort(nodes);
+    } else {
+        nodes_t topNodes, botNodes;
+        insertRange(topNodes, 0, n1);
+        insertRange(botNodes, n1, n1 + n2);
+        this->tactsCount = this->toMerge(topNodes, botNodes);
+    }
 
     this->curPair = queue.begin();
 }
