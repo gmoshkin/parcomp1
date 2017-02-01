@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <utility>
 
@@ -7,6 +8,7 @@
 
 using std::cout;
 using std::endl;
+using std::max;
 using namespace Batcher;
 
 int Scheduler::toSort(const nodes_t &nodes)

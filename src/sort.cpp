@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 
 #include "scheduler.h"
@@ -5,15 +6,7 @@
 
 using std::cout;
 using std::endl;
-
-void swap(int &n1, int &n2)
-{
-    int tmp = n1;
-    if (n1 > n2) {
-        n1 = n2;
-        n2 = tmp;
-    }
-}
+using std::swap;
 
 void swapPair(numbers_t &l1, numbers_t &l2, unsigned i1, unsigned i2)
 {
