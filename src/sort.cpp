@@ -6,7 +6,14 @@
 
 using std::cout;
 using std::endl;
-using std::swap;
+
+template <typename T>
+void swap(T &x, T &y)
+{
+    if (y < x) {
+        std::swap(x, y);
+    }
+}
 
 void swapPair(numbers_t &l1, numbers_t &l2, unsigned i1, unsigned i2)
 {
